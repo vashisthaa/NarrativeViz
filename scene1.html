@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Adolescent Fertility Rate Trend</title>
-    <script type="text/javascript" src="https://d3js.org/d3.v5.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript" src="./scripts/chart_viz.js"></script>
 
     <style>
@@ -103,7 +103,7 @@
             border-width: 1px;
             border-style: ridge;
         }
-        .svg_style{
+        .svg_viz{
             alignment: left;
         }
 
@@ -128,7 +128,7 @@
         }
     </style>
 </head>
-<body onload="drawGraph()">
+<body onload="onbodyload('scene1')">
 <div class="main_window">
     <div class="top_level_box">
         Scene 3
@@ -168,7 +168,7 @@
             <p>This is sample text. This is sample text. This is sample text. This is sample text. This is sample text. </p>
         </div>
         <div class="graph_box">
-            <div class="svg_style">
+            <div class="svg_viz">
                 <svg width="1100" height="650"></svg>
             </div>
         </div>
