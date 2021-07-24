@@ -19,33 +19,44 @@ const vizobject = {
 
 function onbodyload(scene){
     let dataset = d3.csv("./data/WDI_Adolescent_Fertility_cleaned.csv", rowConverter, function (data){
-        if(vizobject.CountryColorMap.size == 0){
-            //alert('hello2');
-            const countries = d3.map(data, function(d){return(d.Country_Code)}).keys();
-            for(const i in countries){
-                vizobject.CountryColorMap.set(countries[i], vizobject.color_category[i%20]);
-            }
-            for(const i in data){
-                if(!(data[i].Country_Code == undefined)){
-                    let values = vizobject.countryMap.get(data[i].Country_Code);
-                    if(values ==null){
-                        values = [];
-                    }
-                    values.push(data[i]);
-                    vizobject.countryMap.set(data[i].Country_Code, values);
+        const countries = d3.map(data, function(d){return(d.Country_Code)}).keys();
+        for(const i in countries){
+            vizobject.CountryColorMap.set(countries[i], vizobject.color_category[i%20]);
+        }
+        for(const i in data){
+            if(!(data[i].Country_Code == undefined)){
+                let values = vizobject.countryMap.get(data[i].Country_Code);
+                if(values ==null){
+                    values = [];
                 }
-
+                values.push(data[i]);
+                vizobject.countryMap.set(data[i].Country_Code, values);
             }
+
         }
         //console.log('Hello');
         let graph = {};
-        graph.xAxis_Length = d3.max(data, function(d) { return d.Year; }) + 10;
-        graph.xAxis_Origin = d3.min(data, function(d) { return d.Year; });
-        graph.yAxis_Length = d3.max(data, function(d) { return d.Fertility; }) + 10;
-        graph.yAxis_Origin = d3.min(data, function(d) { return d.Fertility; });
+        //graph.xAxis_Length = d3.max(data, function(d) { return d.Year; }) + 10;
+        //graph.xAxis_Origin = d3.min(data, function(d) { return d.Year; });
+        //graph.yAxis_Length = d3.max(data, function(d) { return d.Fertility; }) + 10;
+        //graph.yAxis_Origin = d3.min(data, function(d) { return d.Fertility; });
+        graph.xAxis_Length = 2020;
+        graph.xAxis_Origin = 1960;
+        graph.yAxis_Length = 240;
+        graph.yAxis_Origin = 0;
         vizobject.graph = graph;
+        //drawGraphV2();
+        //console.log(graph.xAxis_Origin);
+        //console.log(graph.xAxis_Origin);
+        //console.log(graph.yAxis_Length);
+        //console.log(graph.yAxis_Origin);
         drawGraph();
+
         drawLineChartForCountry('ZWE');
+        drawLineChartForCountry('YEM');
+        drawLineChartForCountry('WLD');
+        //removeLineChartForCountry('ZWE');
+
         //alert('hello');
         //console.log(vizobject.countryMap);
     })
@@ -104,32 +115,30 @@ function drawGraph(){
 
 function drawLineChartForCountry(countryid){
     let svg = d3.select("svg");
-    var data = [[1987,'ZWE','Zimbabwe',110.613],
-        [1988,'ZWE','Zimbabwe',109.0396],
-        1989,'ZWE','Zimbabwe',107.4662];
-    var color = vizobject.CountryColorMap.get(countryid);
-
-    svg.selectAll(".line")
-        .datum(data)
-        .enter()
-        .attr('stroke', function (d){console.log(d[0])});
-
-    svg.selectAll(".line")
-        .datum(data)
-        .enter()
-        .append("path")
-        .attr("fill", "none")
-        .attr("id", countryid)
-        .attr("stroke", color)
-        .attr("stroke-width", 1.5)
+    let countrydata = Object.values(vizobject.countryMap.get(countryid));
+    for(i in countrydata){
+        var row = countrydata[i];
+        countrydata[i] = Object.values(row);
+    }
+    let color = vizobject.CountryColorMap.get(countryid);
+    console.log(countrydata);
+    svg.append("path")
+        .datum(countrydata)
+        .attr("class", "line")
+        .style("fill", "none")
+        .style("stroke", 'red')
+        .style("stroke-width", "2")
         .attr("d", function(d){
             return d3.line()
                 .x(function(d) { return vizobject.graph.xScale(d[0]); })
-                .y(function(d) { return vizobject.graph.yScale(+d[3]); })
+                .y(function(d) { return vizobject.graph.yScale(d[3]); })
+                (d)
         })
+
+
 }
 function removeLineChartForCountry(countryid){
-
+    d3.select("svg").remove(countryid);
 }
 
 function onclickScene1(){
@@ -153,13 +162,9 @@ function onclickScene3(){
             [100, 140]
         ];
 
-        var dataset2 = [
-            [1,5], [12,20], [24,36],
-            [32, 70], [40, 10], [50, 100],
-            [55, 206], [65, 223], [43, 130],
-            [78, 534], [83, 136], [89, 138],
-            [100, 140]
-        ];
+        var dataset = [[1987,'ZWE','Zimbabwe',110.613],
+            [1988,'ZWE','Zimbabwe',109.0396],
+            [1989,'ZWE','Zimbabwe',107.4662]];
 
         // Step 3
         var svg = d3.select("svg"),
@@ -168,8 +173,8 @@ function onclickScene3(){
             height = svg.attr("height") - margin //200
 
         // Step 4
-        var xScale = d3.scaleLinear().domain([0, 100]).range([0, width]),
-            yScale = d3.scaleLinear().domain([0, 200]).range([height, 0]);
+        var xScale = d3.scaleLinear().domain([1960, 2020]).range([0, width]),
+            yScale = d3.scaleLinear().domain([100, 120]).range([height, 0]);
 
         var g = svg.append("g")
             .attr("transform", "translate(" + 100 + "," + 100 + ")");
@@ -213,11 +218,11 @@ function onclickScene3(){
         // Step 8
         var line = d3.line()
             .x(function(d) { return xScale(d[0]); })
-            .y(function(d) { return yScale(d[1]); })
+            .y(function(d) { return yScale(d[3]); })
             .curve(d3.curveMonotoneX)
 
         svg.append("path")
-            .datum(dataset1)
+            .datum(dataset)
             .attr("class", "line")
             .attr("transform", "translate(" + 100 + "," + 100 + ")")
             .attr("d", line)
