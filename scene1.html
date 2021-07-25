@@ -17,11 +17,8 @@
             font-size: 23px;
             padding: 2px;
             background: dodgerblue;
-            border-style: solid;
-            border-width: 0px;
-            border: dodgerblue;
-            border-width: 1px;
-            border-style: ridge;
+
+
         }
         .message_box {
             color: black;
@@ -33,9 +30,7 @@
             font-size: 23px;
             padding: 2px;
             padding-bottom: 5px;
-            border: dodgerblue;
-            border-width: 1px;
-            border-style: ridge;
+
         }
         .main_window {
             width: 1500px;
@@ -44,17 +39,15 @@
             margin-left: auto;
             padding-right: 5px;
             padding-left: 5px;
-            border: dodgerblue;
-            border-width: 1px;
             border-style: ridge;
+            border-width: 1px;
+            border-color: dodgerblue;
 
         }
         .scene_box {
             width: 100%;
             display: inline-block;
-            border: dodgerblue;
-            border-width: 1px;
-            border-style: ridge;
+
         }
         .navigation_box{
             padding: 5px;
@@ -62,9 +55,7 @@
             width: 40%;
             margin-left: 30%;
             margin-right: 30%;
-            border: dodgerblue;
-            border-width: 1px;
-            border-style: ridge;
+
         }
         .navigation_buttons {
             width: 80px;
@@ -78,30 +69,40 @@
             height: auto;
             margin-top: 15px;
             padding: 5px;
-            border: dodgerblue;
-            border-width: 1px;
             border-style: ridge;
+            border-width: 1px;
+            border-color: dodgerblue;
+
+
         }
         .filter_box{
-            width: 9%;
+            width: 12%;
             float: right;
-            height: auto;
+            height: 700px;
             margin-top: 15px;
             padding: 5px;
-            border: dodgerblue;
-            border-width: 1px;
             border-style: ridge;
+            border-width: 1px;
+            border-color: dodgerblue;
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align:justify;
+        }
+        .filter_with_scroll{
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align:justify;
         }
         .graph_box {
-            width: 78%;
+            width: 75%;
             float: left;
             height: 700px;
-            padding: 5px;
+            padding: 2px;
             margin-top: 15px;
             alignment: center;
-            border: dodgerblue;
-            border-width: 1px;
             border-style: ridge;
+            border-width: 1px;
+            border-color: dodgerblue;
         }
         .svg_viz{
             alignment: left;
@@ -131,7 +132,7 @@
 <body onload="onbodyload('scene1')">
 <div class="main_window">
     <div class="top_level_box">
-        Scene 3
+        Scene 1
     </div>
     <div class="message_box">
         Adolescent Fertility still a challenge amid income inequality.
@@ -165,23 +166,29 @@
     </div>
     <div class="scene_box">
         <div class="caption_box">
-            <p>This is sample text. This is sample text. This is sample text. This is sample text. This is sample text. </p>
+            <br>
+            <li><b>Adolescent Fertility Rate</b> for the world is improving but still a concern. </li>
         </div>
         <div class="graph_box">
             <div class="svg_viz">
                 <svg width="1100" height="650"></svg>
             </div>
         </div>
-        <div class="filter_box">
-            <form>
-                <fieldset>
-                    <legend>Select the countries</legend>
-                    <div>
-                        <input type="checkbox" id="coding" name="interest" value="coding">
-                        <label for="coding">Coding</label>
-                    </div>
-                </fieldset>
-            </form>
+        <div class="filter_box" >
+            <table>
+                <tr style="position: fixed; border-style: ridge; border-color: dodgerblue; border-width: .5px">
+                    <td style="color: white; background: dodgerblue; font-family: Verdana">
+                        <b>Select A Country</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="filter_container"class="filter_with_scroll">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
         </div>
     </div>
 
