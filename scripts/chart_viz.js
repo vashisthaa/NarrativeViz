@@ -16,10 +16,22 @@ const vizobject = {
 }
 
 function generateCheckBoxes(countries){
-    countries.sort();
+    var countryTuples = [];
+    for(i in countries){
+        let code = vizobject.countryMap.get(countries[i])[0].Country_Code;
+        let name = vizobject.countryMap.get(countries[i])[0].Country;
+        let color = vizobject.CountryColorMap.get(code);
+        let tuple = [name,code,color];
+
+        countryTuples.push(tuple);
+    }
+    countryTuples.sort();
+    console.log(countryTuples);
     const input_type_checkbox_part1 = '<input type="checkbox" id="';
     const input_type_checkbox_part2 = '" name="';
     const input_type_checkbox_part3 = '" value=';
+    const input_type_checkbox_part4 = ' onclick="handleCheckBoxEvent(this)"';
+
     const closing_bracket = '>';
 
     const input_type_label_part1 = '<label for="';
@@ -30,22 +42,25 @@ function generateCheckBoxes(countries){
         '  <rect width="12" height="12" style="fill:color_code_placeholder;stroke-width:3;stroke:color_code_placeholder"/>\n' +
         '</svg>';
     var finalResult = '';
-    for(i in countries){
-        let newcolorpalette = colorpalette.replace('color_code_placeholder', vizobject.countryMap.get(vizobject.countryMap.get(countries[i])[0].Country_Code));
+    for(i in countryTuples){
+        let newcolorpalette = colorpalette.replaceAll('color_code_placeholder', countryTuples[i][2]);
+        //let newcolorpalette = '';
+        //console.log(countryTuples[i][0]);
         let temp = newcolorpalette+ input_type_checkbox_part1
-                        +vizobject.countryMap.get(countries[i])[0].Country_Code
+                        +countryTuples[i][1]
                         +input_type_checkbox_part2
-                        +vizobject.countryMap.get(countries[i])[0].Country_Code
+                        +countryTuples[i][1]
                         +input_type_checkbox_part3
-                        +vizobject.countryMap.get(countries[i])[0].Country
+                        +countryTuples[i][0]
+                        +input_type_checkbox_part4
                         +closing_bracket
                         +input_type_label_part1
-                        +vizobject.countryMap.get(countries[i])[0].Country_Code
+                        +countryTuples[i][1]
                         +input_type_label_part2
-                        +vizobject.countryMap.get(countries[i])[0].Country
+                        +countryTuples[i][0]
                         +input_type_label_part3
        //console.log(vizobject.countryMap.get(countries[i])[0]);
-        console.log(temp);
+        //console.log(temp);
         finalResult = finalResult + temp;
 
     }
@@ -103,32 +118,14 @@ function onbodyload(scene) {
 
 }
 
-function createChk(countrycode) {
-    let container = document.getElementById('filter_container');
-    var chk = document.createElement('input');  // CREATE CHECK BOX.
-    chk.setAttribute('type', 'checkbox');       // SPECIFY THE TYPE OF ELEMENT.
-    chk.setAttribute('id', countrycode);     // SET UNIQUE ID.
 
-    chk.setAttribute('value', vizobject.countryMap.get(countrycode).Country);
-    chk.setAttribute('name', 'Country');
-
-    var lbl = document.createElement('label');  // CREATE LABEL.
-    lbl.setAttribute('for', countrycode);
-
-    // CREATE A TEXT NODE AND APPEND IT TO THE LABEL.
-    lbl.appendChild(document.createTextNode(vizobject.countryMap.get(countrycode).Country));
-
-    // APPEND THE NEWLY CREATED CHECKBOX AND LABEL TO THE <p> ELEMENT.
-    container.appendChild(chk);
-    container.appendChild(lbl);
-}
 
 function drawGraph() {
+    var margin = {top: 10, right: 10, bottom: 145, left: 50};
+    var width = 1100 - margin.left - margin.right;
+    var height = 650 - margin.top - margin.bottom;
+    var svg = d3.select("svg");
 
-    var svg = d3.select("svg"),
-        margin = 125,
-        width = svg.attr("width") - margin, //300
-        height = svg.attr("height") - margin //200
 
 
     vizobject.graph.xScale = d3.scaleLinear().domain([vizobject.graph.xAxis_Origin, vizobject.graph.xAxis_Length]).range([0, width]);
@@ -166,14 +163,23 @@ function drawGraph() {
 
     // Step 6
     g.append("g")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0,"+height+")")
         .call(d3.axisBottom(vizobject.graph.xScale));
 
     g.append("g")
         .call(d3.axisLeft(vizobject.graph.yScale));
 
 }
-
+function handleCheckBoxEvent(country){
+    //alert(countrycode);
+    let checkbox = document.getElementById(country.id);
+    if(checkbox.checked){
+        drawLineChartForCountry(country.id);
+    }else{
+        removeLineChartForCountry(country.id);
+    }
+    //console.log(country.id);
+}
 function drawLineChartForCountry(countryid) {
     let svg = d3.select("svg");
     let countrydata = Object.values(vizobject.countryMap.get(countryid));
@@ -191,14 +197,13 @@ function drawLineChartForCountry(countryid) {
         .style("fill", "none")
         .style("stroke", color)
         .style("stroke-width", "2")
-        .transition()
-        .duration(5000)
         .attr("d", function (d) {
             return d3.line()
                 .x(function (d) {
-                    return vizobject.graph.xScale(d[0]) + 100;
+                    return vizobject.graph.xScale(d[0]);
                 })
                 .y(function (d) {
+                    console.log(d);
                     return vizobject.graph.yScale(d[3]);
                 })
                 (d)
@@ -213,7 +218,7 @@ function drawLineChartForCountry(countryid) {
         .append("circle")
         .attr("cx", function (d) {
             finalx = d[0];
-            return vizobject.graph.xScale(d[0]) + 100;
+            return vizobject.graph.xScale(d[0]);
         })
         .attr("cy", function (d) {
             finaly = d[3];

@@ -9,7 +9,7 @@
 
     <style>
         .top_level_box {
-            color:black;
+            color: black;
             text-align: center;
             width: 100%;
             font-weight: bold;
@@ -20,6 +20,7 @@
 
 
         }
+
         .message_box {
             color: black;
             text-align: center;
@@ -32,6 +33,7 @@
             padding-bottom: 5px;
 
         }
+
         .main_window {
             width: 1500px;
             height: 900px;
@@ -44,12 +46,14 @@
             border-color: dodgerblue;
 
         }
+
         .scene_box {
             width: 100%;
             display: inline-block;
 
         }
-        .navigation_box{
+
+        .navigation_box {
             padding: 5px;
             height: 50px;
             width: 40%;
@@ -57,13 +61,15 @@
             margin-right: 30%;
 
         }
+
         .navigation_buttons {
             width: 80px;
             float: left;
             alignment: center;
             padding: 5px;
         }
-        .caption_box{
+
+        .caption_box {
             width: 9%;
             float: left;
             height: auto;
@@ -75,10 +81,11 @@
 
 
         }
-        .filter_box{
+
+        .filter_box {
             width: 12%;
             float: right;
-            height: 700px;
+            height: 695px;
             margin-top: 15px;
             padding: 5px;
             border-style: ridge;
@@ -86,13 +93,15 @@
             border-color: dodgerblue;
             overflow-x: hidden;
             overflow-y: auto;
-            text-align:justify;
+            text-align: justify;
         }
-        .filter_with_scroll{
+
+        .filter_with_scroll {
             overflow-x: hidden;
             overflow-y: auto;
-            text-align:justify;
+            text-align: justify;
         }
+
         .graph_box {
             width: 75%;
             float: left;
@@ -104,7 +113,8 @@
             border-width: 1px;
             border-color: dodgerblue;
         }
-        .svg_viz{
+
+        .svg_viz {
             alignment: left;
         }
 
@@ -142,7 +152,7 @@
             <tr>
                 <td>
                     <div class="navigation_buttons">
-                        <button type="button" class="btn" onclick="onclickScene1()"><a >Scene 1</a></button>
+                        <button type="button" class="btn" onclick="onclickScene1()"><a>Scene 1</a></button>
                     </div>
                 </td>
                 <td>
@@ -150,15 +160,16 @@
                 </td>
                 <td>
                     <div class="navigation_buttons">
-                        <button id="button_2" type="button" class="btn" onclick="onclickScene2()"><a >Scene 2</a></button>
+                        <button id="button_2" type="button" class="btn" onclick="onclickScene2()"><a>Scene 2</a>
+                        </button>
                     </div>
                 </td>
                 <td>
-                    <img src="./images/arrow.png" width="60" height="20" >
+                    <img src="./images/arrow.png" width="60" height="20">
                 </td>
                 <td>
                     <div class="navigation_buttons">
-                        <button type="button" class="btn" onclick="onclickScene3()"><a >Scene 3</a></button>
+                        <button type="button" class="btn" onclick="onclickScene3()"><a>Scene 3</a></button>
                     </div>
                 </td>
             </tr>
@@ -167,27 +178,21 @@
     <div class="scene_box">
         <div class="caption_box">
             <br>
-            <li><b>Adolescent Fertility Rate</b> for the world is improving but still a concern. </li>
+            <li><b>Adolescent Fertility Rate</b> for the world is improving but still a concern.</li>
         </div>
         <div class="graph_box">
             <div class="svg_viz">
                 <svg width="1100" height="650"></svg>
             </div>
         </div>
-        <div class="filter_box" >
-            <table>
-                <tr style="position: fixed; border-style: ridge; border-color: dodgerblue; border-width: .5px">
-                    <td style="color: white; background: dodgerblue; font-family: Verdana">
-                        <b>Select A Country</b>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div id="filter_container"class="filter_with_scroll">
-                        </div>
-                    </td>
-                </tr>
-            </table>
+        <div class="filter_box">
+            <div>
+                <b>Select A Country</b>
+            </div>
+
+            <div id="filter_container" class="filter_with_scroll">
+            </div>
+
 
         </div>
     </div>
