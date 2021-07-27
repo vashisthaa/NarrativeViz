@@ -54,8 +54,8 @@
         .navigation_box {
             padding: 5px;
             height: 50px;
-            width: 68%;
-            margin-left: auto;
+            width: auto;
+            margin-left: 40%;
             alignment: center;
 
         }
@@ -69,13 +69,13 @@
         }
 
         .caption_box {
-            width: 14%;
+            width: 13%;
             float: left;
-            height: 645px;
+            height: 625px;
             margin-top: 15px;
             margin-left: 1.5%;
-            padding: 5px;
-            font-size: small;
+            padding: 15px;
+            font-size: medium;
             text-align: justify;
             border-style: ridge;
             border-width: 1px;
@@ -94,7 +94,7 @@
             border-color: forestgreen;
             border-radius: 10px;
             overflow-x: hidden;
-            overflow-y: auto;
+            overflow-y: scroll;
             text-align: justify;
             display: none;
         }
@@ -122,9 +122,10 @@
             width: 68%;
             float: bottom;
             height: 90px;
-            padding: 2px;
+            padding: 10px;
             margin-top: 675px;
             margin-left: auto;
+            text-anchor: middle;
             alignment: center;
         }
 
@@ -137,11 +138,14 @@
             width: auto;
             height: auto;
             padding: 5px;
-            font: 15px Helvetica;
+            font: 12px Helvetica;
             background: lightgreen;
             border: 0px;
             border-radius: 8px;
             pointer-events: none;
+        }
+        div.annotationText {
+            font: italic 13px sans-serif;
         }
         .btn {
             display: inline-block;
@@ -170,7 +174,7 @@
         Scene 1
     </div>
     <div class="message_box">
-        <u>A Study of Adolescent Fertility Rate across regions and countries</u>
+        <u>Adolescent Fertility Rate still a big challenge for low income countries.</u>
     </div>
     <div class="navigation_box">
         <table>
@@ -181,16 +185,10 @@
                     </div>
                 </td>
                 <td>
-                    <img src="./images/arrow.png" width="60" height="20">
-                </td>
-                <td>
                     <div class="navigation_buttons">
                         <button id="button_2" type="button" class="btn" onclick="onclickScene2()"><a>Scene 2</a>
                         </button>
                     </div>
-                </td>
-                <td>
-                    <img src="./images/arrow.png" width="60" height="20">
                 </td>
                 <td>
                     <div class="navigation_buttons">
@@ -201,9 +199,8 @@
         </table>
     </div>
     <div id="scene_box_id" class="scene_box">
-        <div class="caption_box">
-            <br>
-            <li><b>Adolescent Fertility Rate</b> for the world is improving but still a concern.</li>
+        <div id="caption_box" class="caption_box">
+
         </div>
         <div class="graph_box">
             <div id="svg_viz" class="svg_viz">
@@ -219,7 +216,7 @@
             </div>
         </div>
         <div id="footer_box" class="footer_box">
-            Note that the world is improving a lot.
+
         </div>
 
     </div>

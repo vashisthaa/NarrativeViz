@@ -105,7 +105,7 @@ function onbodyload() {
         if(parseInt(scene_param) == 3){
             generateCheckBoxes(countries);
         }
-
+        vizobject.countryList = countries;
 
         let graph = {};
         graph.xAxis_Length = 2020;
@@ -117,16 +117,20 @@ function onbodyload() {
         //console.log(graph.xAxis_Origin);
         //console.log(graph.yAxis_Length);
         //console.log(graph.yAxis_Origin);
-        drawGraph();
-        if(scene_param==null || parseInt(scene_param) == 1){
-            drawLineChartForCountry('WLD');
-        }
-        if(parseInt(scene_param) == 2){
-            drawLineChartForCountry('WLD');
-            drawLineChartForCountry('LIC');
-        }
-        //removeLineChartForCountry('ZWE');
 
+        let scene_param_value = scene_param==null? 1: parseInt(scene_param);
+        drawGraph(scene_param_value);
+        if(scene_param_value == 1){
+            drawLineChartForCountry('WLD');
+        }
+        if(scene_param_value == 2){
+            drawLineChartForCountry('LIC');
+            drawLineChartForCountry('MIC');
+            drawLineChartForCountry('HIC');
+        }
+        addcaption(scene_param_value);
+        addannotations(scene_param_value);
+        addFooter(scene_param_value);
         //alert('hello');
         //console.log(vizobject.countryMap);
     })
@@ -134,7 +138,7 @@ function onbodyload() {
 }
 
 
-function drawGraph() {
+function drawGraph(scene) {
     var margin = 200;
 
     var svg = d3.select("svg");
@@ -148,14 +152,32 @@ function drawGraph() {
     var g = svg.append("g")
         .attr("transform", "translate(" + 100 + "," + 100 + ")");
 
+    if(scene ==1){
+        svg.append('text')
+            .attr('x', width / 2 + 100)
+            .attr('y', 100)
+            .attr('text-anchor', 'middle')
+            .style('font-family', 'Helvetica')
+            .style('font-size', 20)
+            .text('Adolescent Fertility Rate Trends (World)');
+    }else if(scene==2){
+        svg.append('text')
+            .attr('x', width / 2 + 100)
+            .attr('y', 100)
+            .attr('text-anchor', 'middle')
+            .style('font-family', 'Helvetica')
+            .style('font-size', 20)
+            .text('Adolescent Fertility Rate Trends (By Income Groups)');
+    }else if(scene == 3){
+        svg.append('text')
+            .attr('x', width / 2 + 100)
+            .attr('y', 100)
+            .attr('text-anchor', 'middle')
+            .style('font-family', 'Helvetica')
+            .style('font-size', 20)
+            .text('Compare [Adolescent Fertility Rate Trends] By Countries/Regions');
+    }
 
-    svg.append('text')
-        .attr('x', width / 2 + 100)
-        .attr('y', 100)
-        .attr('text-anchor', 'middle')
-        .style('font-family', 'Helvetica')
-        .style('font-size', 20)
-        .text('Adolescent Fertility Rate Trends');
 
 
     svg.append('text')
@@ -193,6 +215,142 @@ function handleCheckBoxEvent(country) {
         removeLineChartForCountry(country.id);
     }
     //console.log(country.id);
+}
+
+function drawLinceChartForAllCountries(){
+    let checkbox = document.getElementById('ALL');
+    if (checkbox.checked) {
+        for(i in vizobject.countryList){
+            drawLineChartForCountry(vizobject.countryList[i]);
+        }
+    } else {
+        for(i in vizobject.countryList) {
+            removeLineChartForCountry(vizobject.countryList[i]);
+        }
+    }
+}
+
+const caption_box_html_1 = '</br></br><li>Adolescent Fertility Rate is steadily declining in the world.</li></br><li>More than 100% reduction since 1960. Since 2018 the decline is slower.\n' +
+    '            </li>\n' +
+    '            </br>\n' +
+    '            <li>\n' +
+    '                The Average drop per year is 0.75.\n' +
+    '            </li>\n' +
+    '            </br>\n' +
+    '            <li>\n' +
+    '                Average drop per year = (Rate in 1960 - Rate in 2019) / 59\n' +
+    '            </li>';
+const caption_box_html_2 = '</br></br><li> There is universal decline since 1990.</li> ' +
+    '</br></br><li> The Low Income categories though have improved a lot but the gap is still pretty high.' +
+    '</br></br><li> The highest of High Income group in 1960 is still lower than the lowest of Low income in 2019.' +
+    '</br></br><li> The gap is narrowed down between middle income and high income groups compared to start of year 1960.' +
+    '</br></br><li> The gap is widened between low income and middle income groups compared to start of year 1960.';
+const caption_box_html_3 = '</br></br><li> Explore the trends for various countries/regions by selecting in the filter box in the right hand pane';
+
+function addcaption(sceneid){
+    if(sceneid == 1){
+        document.getElementById("caption_box").innerHTML= caption_box_html_1;
+    }else if(sceneid == 2){
+        document.getElementById("caption_box").innerHTML= caption_box_html_2;
+    }else if (sceneid == 3){
+        document.getElementById("caption_box").innerHTML= caption_box_html_3;
+    }
+
+}
+var footer_box_html_1;
+var footer_box_html_2;
+var footer_box_html_3 = '<b>Data Source: <a href="https://data.worldbank.org/indicator">World Data Indicators</a></b>';
+function addFooter(sceneid){
+    if(sceneid == 3){
+        document.getElementById("footer_box").innerHTML= footer_box_html_3;
+
+    }
+}
+function addannotations(sceneid){
+    if(sceneid == 1){
+        var group = d3.select("#svg_viz")
+            .select("svg")
+            .append("g");
+
+        console.log(vizobject.graph.xScale(2000));
+        console.log(vizobject.graph.yScale(56.32864573));
+
+        group.append('rect')
+            .attr("x", vizobject.graph.xScale(2010))
+            .attr("y", vizobject.graph.yScale(56.32864573)-170)
+            .attr('width', 325)
+            .attr('height', 50)
+            .attr('rx', 8)
+            .attr('ry', 8)
+            .attr("fill", "lightgreen")
+            .attr("class", "annotationBox");
+
+        group.append("text")
+            .attr("x", vizobject.graph.xScale(2010)+10)
+            .attr("y", vizobject.graph.yScale(56.32864573)-150)
+            .attr("class", "annotationText")
+            .style('font','12px Helvetica')
+            .text("[1996-2004] Avg drop in Fertility rate is 1.33 per year.");
+        group.append("text")
+            .attr("x", vizobject.graph.xScale(2010)+10)
+            .attr("y", vizobject.graph.yScale(56.32864573)-135)
+            .attr("class", "annotationText")
+            .style('font','12px Helvetica')
+            .text("2002 is the best year with Average drop as 1.70");
+        group
+            .append("line")
+            .attr("opacity", 1)
+            .attr("style", "stroke:rgb(0,0,0);stroke-width:0.5px")
+            .attr("x1", vizobject.graph.xScale(1996)+97)
+            .attr("y1", vizobject.graph.yScale(61.33489281)+102)
+            .attr("x2", vizobject.graph.xScale(2017)+70)
+            .attr("y2", vizobject.graph.yScale(56.32864573)-120);
+
+        group
+            .append("line")
+            .attr("opacity", 1)
+            .attr("style", "stroke:rgb(0,0,0);stroke-width:0.5px")
+            .attr("x1", vizobject.graph.xScale(2004)+97)
+            .attr("y1", vizobject.graph.yScale(50.52434826)+102)
+            .attr("x2", vizobject.graph.xScale(2017)+70)
+            .attr("y2", vizobject.graph.yScale(56.32864573)-120);
+        //group.remove();
+    }else if(sceneid == 2){
+        var group = d3.select("#svg_viz")
+            .select("svg")
+            .append("g");
+
+        console.log(vizobject.graph.xScale(2000));
+        console.log(vizobject.graph.yScale(56.32864573));
+
+        group.append('rect')
+            .attr("x", vizobject.graph.xScale(2000))
+            .attr("y", vizobject.graph.yScale(56.32864573)-220)
+            .attr('width', 387)
+            .attr('height', 25)
+            .attr('rx', 8)
+            .attr('ry', 8)
+            .attr("fill", "lightgreen")
+            .attr("class", "annotationBox");
+
+        group.append("text")
+            .attr("x", vizobject.graph.xScale(2000)+10)
+            .attr("y", vizobject.graph.yScale(56.32864573)-200)
+            .attr("class", "annotationText")
+            .style('font','12px Helvetica')
+            .text("Starting Year 1989 upward trend before major decline in 21st Century.");
+
+        group
+            .append("line")
+            .attr("opacity", 1)
+            .attr("style", "stroke:rgb(0,0,0);stroke-width:0.5px")
+            .attr("x1", vizobject.graph.xScale(1989)+100)
+            .attr("y1", vizobject.graph.yScale(129.1096599)+100)
+            .attr("x2", vizobject.graph.xScale(2010)+70)
+            .attr("y2", vizobject.graph.yScale(200)+75);
+
+        //group.remove();
+    }
 }
 
 function drawLineChartForCountry(countryid) {
@@ -233,7 +391,6 @@ function drawLineChartForCountry(countryid) {
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-
     group
         .selectAll("dot")
         .data(countrydata)
@@ -255,7 +412,6 @@ function drawLineChartForCountry(countryid) {
             //console.log(d3.event.pageX);
             //console.log(d3.event.pageY);
             tooltipdiv.transition()
-                .duration(200)
                 .style("opacity", 1);
             tooltipdiv.html( "Country: <b>"+ d[1] +"</b><br/>Year:<b> " + d[0] + " </b><br/>Fertility:<b> "  + d[3] + "</b>")
                 .style("left", (d3.event.pageX) + "px")
@@ -263,10 +419,13 @@ function drawLineChartForCountry(countryid) {
         })
         .on("mouseout", function(d) {
             tooltipdiv.transition()
-                .duration(500)
                 .style("opacity", 0);
         })
-        .style("fill", color)
+        .style("fill", color);
+
+
+
+
     //console.log(finalx);
     //console.log(finaly);
     //console.log(label);
@@ -291,6 +450,7 @@ function removeLineChartForCountry(countryid) {
 
 function onclickScene1() {
     window.location.replace("./story.html?scene=1");
+
 }
 
 function onclickScene2() {
