@@ -449,17 +449,17 @@ function removeLineChartForCountry(countryid) {
 
 
 function onclickScene1() {
-    window.location.replace("./story.html?scene=1");
+    window.location.replace("./index.html?scene=1");
 
 }
 
 function onclickScene2() {
-    window.location.replace("./story.html?scene=2");
+    window.location.replace("./index.html?scene=2");
 
 }
 
 function onclickScene3() {
-    window.location.replace("./story.html?scene=3");
+    window.location.replace("./index.html?scene=3");
 }
 
 
