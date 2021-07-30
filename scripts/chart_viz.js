@@ -268,7 +268,7 @@ function addcaption(sceneid){
 }
 var footer_box_html_1;
 var footer_box_html_2;
-var footer_box_html_3 = '<b>Data Source: <a href="https://data.worldbank.org/indicator" target="_blank">World Data Indicators</a></b>';
+var footer_box_html_3 = '<b>Data Source: @ <a href="https://data.worldbank.org/indicator/SP.ADO.TFRT" target="_blank">World Data Indicators</a></b>';
 function addFooter(sceneid){
     if(sceneid == 3){
         document.getElementById("footer_box").innerHTML= footer_box_html_3;
