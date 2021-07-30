@@ -381,7 +381,7 @@ function getCol(matrix, col){
 
 function drawLineChartForCountry(countryid) {
     let svg = d3.select("svg");
-    console.log(countryid);
+    //console.log(countryid);
     let countrydata = Object.values(vizobject.countryMap.get(countryid));
     for (i in countrydata) {
         var row = countrydata[i];
@@ -390,14 +390,14 @@ function drawLineChartForCountry(countryid) {
     var maxRow = countrydata.map(function(row){ return Math.max.apply(Math, row); });
 
     let color = vizobject.CountryColorMap.get(countryid);
-    col = getCol(countrydata, 3);
+    //col = getCol(countrydata, 3);
     //console.log(col);
-    maxVal = Math.max.apply(null, col);
-    minVal = Math.min.apply(null, col)
+    //maxVal = Math.max.apply(null, col);
+    //minVal = Math.min.apply(null, col)
     //console.log('Max For:' + countrydata[0][1] + ' ' + Math.max.apply(null, col));
     //console.log('Min For:' + countrydata[0][1] + ' ' + Math.min.apply(null, col));
-    percentage = ((col[0] - col[59])*100)/maxVal;
-    console.log(countrydata[0][1]+','+ percentage);
+    //percentage = ((col[0] - col[59])*100)/maxVal;
+    //console.log(countrydata[0][1]+','+ percentage);
     var group = svg.append('g')
         .attr('id', countryid);
     group.append("path")
@@ -490,7 +490,7 @@ function removeLineChartForCountry(countryid) {
 function onclickClearFilter(){
     var clist = document.getElementsByTagName("input");
     for (var i = 0; i < clist.length; ++i) {
-        console.log(clist[i]);
+        //console.log(clist[i]);
         clist[i].checked = false;
     }
     for(i in vizobject.countryList){
@@ -499,6 +499,7 @@ function onclickClearFilter(){
     document.getElementById("caption_box").innerHTML= caption_box_html_scene_3_clear;
 }
 function onclickScene1() {
+    document.getElementById('button_1').classList.remove('button.active');
     window.location.replace("./index.html?scene=1");
 
 }

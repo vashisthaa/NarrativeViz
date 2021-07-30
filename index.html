@@ -9,10 +9,9 @@
 
   <style>
     .top_level_box {
-      color: black;
       text-align: center;
       font-weight: bold;
-      font-size: 23px;
+      font-size: 35px;
       width: 1750px;
       padding: 2px;
       background: forestgreen;
@@ -150,7 +149,7 @@
     div.annotationText {
       font: italic 13px sans-serif;
     }
-    .btn {
+    .button {
       display: inline-block;
       background-color: forestgreen;
       font-weight: 400;
@@ -166,9 +165,16 @@
       font-size: 1rem;
       line-height: 1.5;
       border-radius: .25rem;
+      box-shadow: 0 5px #999;
       color: #fff;
       transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     }
+    .button:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+
   </style>
 </head>
 <body onload="onbodyload()">
@@ -184,18 +190,18 @@
       <tr>
         <td>
           <div class="navigation_buttons">
-            <button type="button" class="btn" onclick="onclickScene1()"><a>Scene 1</a></button>
+            <button id="button_1" type="button" class="button" onclick="onclickScene1(); this.disable()"><a>Scene 1</a></button>
           </div>
         </td>
         <td>
           <div class="navigation_buttons">
-            <button id="button_2" type="button" class="btn" onclick="onclickScene2()"><a>Scene 2</a>
+            <button id="button_2" type="button" class="button" onclick="onclickScene2()"><a>Scene 2</a>
             </button>
           </div>
         </td>
         <td>
           <div class="navigation_buttons">
-            <button type="button" class="btn" onclick="onclickScene3()"><a>Scene 3</a></button>
+            <button id="button_3" type="button" class="button" onclick="onclickScene3()"><a>Scene 3</a></button>
           </div>
         </td>
       </tr>
@@ -213,7 +219,7 @@
     <div id="filter_country" class="filter_box">
       <div>
         <b>Select A Country</b>
-        <button type="button" class="btn" onclick="onclickClearFilter()"><a>Clear</a></button>
+        <button type="button" class="button" onclick="onclickClearFilter()"><a>Clear</a></button>
       </div>
       <div id="filter_container" class="filter_with_scroll">
       </div>
