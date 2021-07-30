@@ -246,7 +246,7 @@ const caption_box_html_1 = '</br></br><li>Adolescent Fertility Rate is steadily 
     '            <li>\n' +
     '                Average drop per year = (Rate in 1960 - Rate in 2019) / 59\n' +
     '            </li>';
-const caption_box_html_2 = '</br></br><li> There is universal decline since 1990.</li> ' +
+const caption_box_html_2 = '</br></br><li> There is universal decline since 1990.' +
     '</br></br><li> The Low Income categories though have improved a lot but the gap is still pretty high.' +
     '</br></br><li> The highest of High Income group in 1960 is still lower than the lowest of Low income in 2019.' +
     '</br></br><li> The gap is narrowed down between middle income and high income groups compared to start of year 1960.' +
