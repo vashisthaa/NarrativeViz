@@ -256,6 +256,7 @@ const caption_box_html_3 = '</br></br><li> Explore the trends for various countr
     '</br></br><li> Somalia has worst performance since 1960. ' +
     '</br></br><li> UAE has best performance since 1960. ' +
     '</br></br><li> Argentina has almost flat performance ';
+
 function addcaption(sceneid){
     if(sceneid == 1){
         document.getElementById("caption_box").innerHTML= caption_box_html_1;
@@ -266,13 +267,17 @@ function addcaption(sceneid){
     }
 
 }
-var footer_box_html_1;
+
+var footer_box_html_1 = '<p style="font-family: Helvetica font-size: 15px font-style: italic">Note: Hover on the data points to see exact data point along with the full country name in a tooltip.';
 var footer_box_html_2;
-var footer_box_html_3 = '<b>Data Source: @ <a href="https://data.worldbank.org/indicator/SP.ADO.TFRT" target="_blank">World Data Indicators</a></b>';
+var footer_box_html_3 = '<b>Data Source: @ <a href="https://data.worldbank.org/indicator/SP.ADO.TFRT" target="_blank">World Data Indicators</a></b>' +
+    footer_box_html_1;
 function addFooter(sceneid){
     if(sceneid == 3){
         document.getElementById("footer_box").innerHTML= footer_box_html_3;
 
+    }else if(sceneid == 1 | sceneid ==2){
+        document.getElementById("footer_box").innerHTML= footer_box_html_1;
     }
 }
 function addannotations(sceneid){
@@ -463,12 +468,15 @@ function drawLineChartForCountry(countryid) {
     //if(label.length > 10){
       //  label = label.substring(0,9) + '...'
     //}
+    if(label.length > 12){
+        label = label.substring(0,11)+'...';
+    }
     group.append("text")
         .attr("transform", "translate("  + vizobject.graph.xScale(finalx + 7) + "," + vizobject.graph.yScale(finaly-53) + ")")
         .attr("dy", ".35em")
         .attr("text-anchor", "start")
         .style("fill", 'black')
-        .style("font-size", '10px')
+        .style('font','15px Helvetica')
         .text(label);
 }
 
