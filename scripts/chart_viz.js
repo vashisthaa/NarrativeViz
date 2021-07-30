@@ -28,14 +28,14 @@ function generateCheckBoxes(countries) {
     }
     countryTuples.sort();
     //console.log(countryTuples);
-    const input_type_checkbox_part1 = '<input type="checkbox" id="';
+    const input_type_checkbox_part1 = '<input type="checkbox" id=chk_"';
     const input_type_checkbox_part2 = '" name="';
     const input_type_checkbox_part3 = '" value=';
     const input_type_checkbox_part4 = ' onclick="handleCheckBoxEvent(this)"';
 
     const closing_bracket = '>';
 
-    const input_type_label_part1 = '<label for="';
+    const input_type_label_part1 = '<label for=chk_"';
     const input_type_label_part2 = '">';
     const input_type_label_part3 = '</label><br>';
 
@@ -128,6 +128,19 @@ function onbodyload() {
             drawLineChartForCountry('MIC');
             drawLineChartForCountry('HIC');
         }
+        if(scene_param_value == 3){
+            drawLineChartForCountry('SOM');
+            drawLineChartForCountry('ARE');
+            drawLineChartForCountry('ARG');
+
+            checkbox = document.getElementById('chk_'+'"SOM"');
+            checkbox.checked = true;
+            checkbox = document.getElementById('chk_'+'"ARE"');
+            checkbox.checked = true;
+            checkbox = document.getElementById('chk_'+'"ARG"');
+            checkbox.checked = true;
+        }
+
         addcaption(scene_param_value);
         addannotations(scene_param_value);
         addFooter(scene_param_value);
@@ -155,7 +168,7 @@ function drawGraph(scene) {
     if(scene ==1){
         svg.append('text')
             .attr('x', width / 2 + 100)
-            .attr('y', 100)
+            .attr('y', 90)
             .attr('text-anchor', 'middle')
             .style('font-family', 'Helvetica')
             .style('font-size', 20)
@@ -163,7 +176,7 @@ function drawGraph(scene) {
     }else if(scene==2){
         svg.append('text')
             .attr('x', width / 2 + 100)
-            .attr('y', 100)
+            .attr('y', 90)
             .attr('text-anchor', 'middle')
             .style('font-family', 'Helvetica')
             .style('font-size', 20)
@@ -171,7 +184,7 @@ function drawGraph(scene) {
     }else if(scene == 3){
         svg.append('text')
             .attr('x', width / 2 + 100)
-            .attr('y', 100)
+            .attr('y', 90)
             .attr('text-anchor', 'middle')
             .style('font-family', 'Helvetica')
             .style('font-size', 20)
@@ -210,23 +223,16 @@ function handleCheckBoxEvent(country) {
     //alert(countrycode);
     let checkbox = document.getElementById(country.id);
     if (checkbox.checked) {
-        drawLineChartForCountry(country.id);
+        drawLineChartForCountry(country.id.substring(5,country.id.length-1));
     } else {
-        removeLineChartForCountry(country.id);
+        removeLineChartForCountry(country.id.substring(5,country.id.length-1));
     }
     //console.log(country.id);
 }
 
-function drawLinceChartForAllCountries(){
-    let checkbox = document.getElementById('ALL');
-    if (checkbox.checked) {
-        for(i in vizobject.countryList){
-            drawLineChartForCountry(vizobject.countryList[i]);
-        }
-    } else {
-        for(i in vizobject.countryList) {
-            removeLineChartForCountry(vizobject.countryList[i]);
-        }
+function drawLinceChartForCountries(countries){
+    for(i in countries){
+        drawLineChartForCountry(countries[i]);
     }
 }
 
@@ -245,8 +251,11 @@ const caption_box_html_2 = '</br></br><li> There is universal decline since 1990
     '</br></br><li> The highest of High Income group in 1960 is still lower than the lowest of Low income in 2019.' +
     '</br></br><li> The gap is narrowed down between middle income and high income groups compared to start of year 1960.' +
     '</br></br><li> The gap is widened between low income and middle income groups compared to start of year 1960.';
-const caption_box_html_3 = '</br></br><li> Explore the trends for various countries/regions by selecting in the filter box in the right hand pane';
-
+const caption_box_html_scene_3_clear = '</br></br><li> Explore the trends for various countries/regions by selecting in the filter box in the right hand pane';
+const caption_box_html_3 = '</br></br><li> Explore the trends for various countries/regions by selecting in the filter box in the right hand pane. For example shown here' +
+    '</br></br><li> Somalia has worst performance since 1960. ' +
+    '</br></br><li> UAE has best performance since 1960. ' +
+    '</br></br><li> Argentina has almost flat performance ';
 function addcaption(sceneid){
     if(sceneid == 1){
         document.getElementById("caption_box").innerHTML= caption_box_html_1;
@@ -259,7 +268,7 @@ function addcaption(sceneid){
 }
 var footer_box_html_1;
 var footer_box_html_2;
-var footer_box_html_3 = '<b>Data Source: <a href="https://data.worldbank.org/indicator">World Data Indicators</a></b>';
+var footer_box_html_3 = '<b>Data Source: <a href="https://data.worldbank.org/indicator" target="_blank">World Data Indicators</a></b>';
 function addFooter(sceneid){
     if(sceneid == 3){
         document.getElementById("footer_box").innerHTML= footer_box_html_3;
@@ -272,14 +281,14 @@ function addannotations(sceneid){
             .select("svg")
             .append("g");
 
-        console.log(vizobject.graph.xScale(2000));
-        console.log(vizobject.graph.yScale(56.32864573));
+        //console.log(vizobject.graph.xScale(2000));
+        //console.log(vizobject.graph.yScale(56.32864573));
 
         group.append('rect')
             .attr("x", vizobject.graph.xScale(2010))
-            .attr("y", vizobject.graph.yScale(56.32864573)-170)
-            .attr('width', 325)
-            .attr('height', 50)
+            .attr("y", vizobject.graph.yScale(56.32864573)-190)
+            .attr('width', 345)
+            .attr('height', 70)
             .attr('rx', 8)
             .attr('ry', 8)
             .attr("fill", "lightgreen")
@@ -287,22 +296,22 @@ function addannotations(sceneid){
 
         group.append("text")
             .attr("x", vizobject.graph.xScale(2010)+10)
-            .attr("y", vizobject.graph.yScale(56.32864573)-150)
+            .attr("y", vizobject.graph.yScale(56.32864573)-165)
             .attr("class", "annotationText")
-            .style('font','12px Helvetica')
-            .text("[1996-2004] Avg drop in Fertility rate is 1.33 per year.");
+            .style('font','15px Helvetica')
+            .text("[1996-2004] Avg drop in Fertility rate = 1.33/year.");
         group.append("text")
             .attr("x", vizobject.graph.xScale(2010)+10)
             .attr("y", vizobject.graph.yScale(56.32864573)-135)
             .attr("class", "annotationText")
-            .style('font','12px Helvetica')
+            .style('font','15px Helvetica')
             .text("2002 is the best year with Average drop as 1.70");
         group
             .append("line")
             .attr("opacity", 1)
             .attr("style", "stroke:rgb(0,0,0);stroke-width:0.5px")
-            .attr("x1", vizobject.graph.xScale(1996)+97)
-            .attr("y1", vizobject.graph.yScale(61.33489281)+102)
+            .attr("x1", vizobject.graph.xScale(1996)+100)
+            .attr("y1", vizobject.graph.yScale(61.33489281)+100)
             .attr("x2", vizobject.graph.xScale(2017)+70)
             .attr("y2", vizobject.graph.yScale(56.32864573)-120);
 
@@ -310,8 +319,8 @@ function addannotations(sceneid){
             .append("line")
             .attr("opacity", 1)
             .attr("style", "stroke:rgb(0,0,0);stroke-width:0.5px")
-            .attr("x1", vizobject.graph.xScale(2004)+97)
-            .attr("y1", vizobject.graph.yScale(50.52434826)+102)
+            .attr("x1", vizobject.graph.xScale(2004)+100)
+            .attr("y1", vizobject.graph.yScale(50.52434826)+100)
             .attr("x2", vizobject.graph.xScale(2017)+70)
             .attr("y2", vizobject.graph.yScale(56.32864573)-120);
         //group.remove();
@@ -320,48 +329,70 @@ function addannotations(sceneid){
             .select("svg")
             .append("g");
 
-        console.log(vizobject.graph.xScale(2000));
-        console.log(vizobject.graph.yScale(56.32864573));
+        //console.log(vizobject.graph.xScale(2000));
+        //console.log(vizobject.graph.yScale(56.32864573));
 
         group.append('rect')
-            .attr("x", vizobject.graph.xScale(2000))
-            .attr("y", vizobject.graph.yScale(56.32864573)-220)
-            .attr('width', 387)
-            .attr('height', 25)
+            .attr("x", vizobject.graph.xScale(2005))
+            .attr("y", vizobject.graph.yScale(56.32864573)-245)
+            .attr('width', 345)
+            .attr('height', 70)
             .attr('rx', 8)
             .attr('ry', 8)
             .attr("fill", "lightgreen")
             .attr("class", "annotationBox");
 
         group.append("text")
-            .attr("x", vizobject.graph.xScale(2000)+10)
-            .attr("y", vizobject.graph.yScale(56.32864573)-200)
+            .attr("x", vizobject.graph.xScale(2005)+10)
+            .attr("y", vizobject.graph.yScale(56.32864573)-220)
             .attr("class", "annotationText")
-            .style('font','12px Helvetica')
-            .text("Starting Year 1989 upward trend before major decline in 21st Century.");
-
+            .style('font','15px Helvetica')
+            .text(" 1989 marks final upward trend before major");
+        group.append("text")
+            .attr("x", vizobject.graph.xScale(2005)+10)
+            .attr("y", vizobject.graph.yScale(56.32864573)-190)
+            .attr("class", "annotationText")
+            .style('font','15px Helvetica')
+            .text(" improvements starts in 21st Century.");
         group
             .append("line")
             .attr("opacity", 1)
             .attr("style", "stroke:rgb(0,0,0);stroke-width:0.5px")
             .attr("x1", vizobject.graph.xScale(1989)+100)
             .attr("y1", vizobject.graph.yScale(129.1096599)+100)
-            .attr("x2", vizobject.graph.xScale(2010)+70)
-            .attr("y2", vizobject.graph.yScale(200)+75);
+            .attr("x2", vizobject.graph.xScale(2012)+70)
+            .attr("y2", vizobject.graph.yScale(200)+95);
 
         //group.remove();
     }
 }
+function getCol(matrix, col){
+    var column = [];
+    for(var i=0; i<matrix.length; i++){
+        column.push(matrix[i][col]);
+    }
+    return column; // return column data..
+}
 
 function drawLineChartForCountry(countryid) {
     let svg = d3.select("svg");
+    console.log(countryid);
     let countrydata = Object.values(vizobject.countryMap.get(countryid));
     for (i in countrydata) {
         var row = countrydata[i];
         countrydata[i] = Object.values(row);
     }
+    var maxRow = countrydata.map(function(row){ return Math.max.apply(Math, row); });
+
     let color = vizobject.CountryColorMap.get(countryid);
-    //console.log(countrydata);
+    col = getCol(countrydata, 3);
+    //console.log(col);
+    maxVal = Math.max.apply(null, col);
+    minVal = Math.min.apply(null, col)
+    //console.log('Max For:' + countrydata[0][1] + ' ' + Math.max.apply(null, col));
+    //console.log('Min For:' + countrydata[0][1] + ' ' + Math.min.apply(null, col));
+    percentage = ((col[0] - col[59])*100)/maxVal;
+    console.log(countrydata[0][1]+','+ percentage);
     var group = svg.append('g')
         .attr('id', countryid);
     group.append("path")
@@ -448,6 +479,17 @@ function removeLineChartForCountry(countryid) {
 }
 
 
+function onclickClearFilter(){
+    var clist = document.getElementsByTagName("input");
+    for (var i = 0; i < clist.length; ++i) {
+        console.log(clist[i]);
+        clist[i].checked = false;
+    }
+    for(i in vizobject.countryList){
+        removeLineChartForCountry(vizobject.countryList[i]);
+    }
+    document.getElementById("caption_box").innerHTML= caption_box_html_scene_3_clear;
+}
 function onclickScene1() {
     window.location.replace("./index.html?scene=1");
 

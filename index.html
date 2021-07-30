@@ -16,6 +16,7 @@
       width: 1750px;
       padding: 2px;
       background: forestgreen;
+      color: #fff;
     }
 
     .message_box {
@@ -41,6 +42,7 @@
       border-width: 2px;
       border-left: none;
       border-right: none;
+      border-top: none;
       border-color: forestgreen;
       font-family: Helvetica;
     }
@@ -210,13 +212,12 @@
     <div id="filter_country" class="filter_box">
       <div>
         <b>Select A Country</b>
+        <button type="button" class="btn" onclick="onclickClearFilter()"><a>Clear</a></button>
       </div>
-
       <div id="filter_container" class="filter_with_scroll">
       </div>
     </div>
     <div id="footer_box" class="footer_box">
-
     </div>
 
   </div>
