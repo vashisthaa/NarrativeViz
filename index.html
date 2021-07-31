@@ -62,7 +62,7 @@
     }
 
     .navigation_buttons {
-      width: 80px;
+      width: 180px;
       float: left;
       margin-left: auto;
       alignment: center;
@@ -167,6 +167,7 @@
       border-radius: .25rem;
       box-shadow: 0 5px #999;
       color: #fff;
+      width: 100px;
       transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     }
     .button:active {
@@ -190,18 +191,13 @@
       <tr>
         <td>
           <div class="navigation_buttons">
-            <button id="button_1" type="button" class="button" onclick="onclickScene1(); this.disable()"><a>Scene 1</a></button>
+            <button id="previous" type="button" class="button" onclick="onclickPrevious(); this.disable()"><a>Previous</a></button>
           </div>
         </td>
         <td>
           <div class="navigation_buttons">
-            <button id="button_2" type="button" class="button" onclick="onclickScene2()"><a>Scene 2</a>
+            <button id="next" type="button" class="button" onclick="onclickNext()"><a>Next</a>
             </button>
-          </div>
-        </td>
-        <td>
-          <div class="navigation_buttons">
-            <button id="button_3" type="button" class="button" onclick="onclickScene3()"><a>Scene 3</a></button>
           </div>
         </td>
       </tr>

@@ -1,3 +1,4 @@
+var currentScene =1;
 const vizobject = {
     color_category: d3.schemeCategory20,
     CountryColorMap: new Map(),
@@ -73,6 +74,23 @@ function generateCheckBoxes(countries) {
 function onbodyload() {
     const params = new URLSearchParams(window.location.search);
     const scene_param = params.get('scene');
+    var previous = document.getElementById("previous");
+    var next = document.getElementById("next");
+
+    if(scene_param == null || scene_param == 1){
+        previous.style.visibility = "hidden";
+        next.style.visibility = "visible";
+        currentScene = 1;
+    }else if (scene_param == 2){
+        previous.style.visibility = "visible";
+        next.style.visibility = "visible";
+        currentScene = 2;
+    }else if(scene_param == 3){
+        previous.style.visibility = "visible";
+        next.style.visibility = "hidden";
+        currentScene = 3;
+    }
+
     if(parseInt(scene_param) == 3){
         //console.log(document.getElementById('filter_country').style.padding);
         //document.getElementById('filter_country').remove();
@@ -498,19 +516,24 @@ function onclickClearFilter(){
     }
     document.getElementById("caption_box").innerHTML= caption_box_html_scene_3_clear;
 }
-function onclickScene1() {
-    document.getElementById('button_1').classList.remove('button.active');
-    window.location.replace("./index.html?scene=1");
-
+function onclickPrevious() {
+    if(currentScene == 1){
+        //do nothing
+    } else if(currentScene == 2){
+        window.location.replace("./index.html?scene=1");
+    } else if(currentScene == 3){
+        window.location.replace("./index.html?scene=2");
+    }
 }
 
-function onclickScene2() {
-    window.location.replace("./index.html?scene=2");
-
-}
-
-function onclickScene3() {
-    window.location.replace("./index.html?scene=3");
+function onclickNext() {
+    if(currentScene == 1){
+        window.location.replace("./index.html?scene=2");
+    } else if(currentScene == 2){
+        window.location.replace("./index.html?scene=3");   
+    } else if(currentScene == 3){
+        //do nothing
+    }
 }
 
 
